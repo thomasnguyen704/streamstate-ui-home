@@ -1,24 +1,24 @@
 <template>
   <div class="mb-4">
     <b-row class="mt-2">
-      <b-col md="2" id="quickMenu" class="small">
-        <h5>To do</h5>
-        <p>
-          o-auth login <br/>
-          plug this to firestore <br/>
-          Think of what should go here.
-        </p>
+
+      <b-col lg="2" sm="3" id="quickMenu" class="small">
+        <h5>Title</h5>
+        <p>Content</p>
       </b-col>
-      <b-col md="5" id="editor" class="mb-5">
-        <div class="ml-2 mb-3">
+
+      <b-col lg="5" sm="9" id="editor" class="mb-5">
+        <div class="mb-3">
           <b-button variant="outline-secondary" size="sm" class="mx-1"> <b-icon icon="play-fill"></b-icon> Run </b-button>
           <b-button variant="outline-secondary" size="sm" class="mx-1"> <b-icon icon="server"></b-icon> Save </b-button>
         </div>
         <prism-editor class="my-editor" v-model="code" :highlight="highlighter" line-numbers />
       </b-col>
-      <b-col md="5" id="output" class="small">
+
+      <b-col lg="5" id="output" class="small">
         <span v-html="code"></span>
       </b-col>
+
     </b-row>
   </div>
 </template>
@@ -63,7 +63,6 @@ export default {
     border-left: solid thin #dfdfdf;
     border-right: solid thin #dfdfdf;
     overflow-y: hidden;
-    padding: 0;
   }
   #output, #quickMenu {
     height: 85vh;
