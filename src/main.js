@@ -9,10 +9,6 @@ import 'bootstrap-vue/dist/bootstrap-vue.css';
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 
-import VuePrismEditor from "vue-prism-editor";
-import "vue-prism-editor/dist/prismeditor.min.css";
-Vue.component("prism-editor", VuePrismEditor);
-
 Vue.config.productionTip = false;
 
 new Vue({

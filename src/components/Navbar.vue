@@ -16,9 +16,9 @@
             
             <b-nav-item-dropdown right>
               <template #button-content>User Options</template>
-              <b-dropdown-item disabled>{{user}}</b-dropdown-item>
-              <b-dropdown-item to="/login">Login</b-dropdown-item>
-              <b-dropdown-item to="#">Sign Out</b-dropdown-item>
+              <b-dropdown-item v-if="user" disabled>{{user}}</b-dropdown-item>
+              <b-dropdown-item v-if="!user" to="/login">Login</b-dropdown-item>
+              <b-dropdown-item v-if="user" to="#" @click="$emit('logout')">Log Out</b-dropdown-item>
             </b-nav-item-dropdown>
           </b-navbar-nav>
         </b-collapse>

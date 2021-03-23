@@ -1,24 +1,35 @@
 <template>
   <div class="mb-4">
-    <b-row class="mt-2">
 
-      <b-col lg="2" sm="3" id="quickMenu" class="small">
-        <h5>Title</h5>
-        <p>Content</p>
-      </b-col>
-
-      <b-col lg="5" sm="9" id="editor" class="mb-5">
-        <div class="mb-3">
-          <b-button variant="outline-secondary" size="sm" class="mx-1"> <b-icon icon="play-fill"></b-icon> Run </b-button>
-          <b-button variant="outline-secondary" size="sm" class="mx-1"> <b-icon icon="server"></b-icon> Save </b-button>
+    <b-row class="mt-2" v-if="user">
+      <b-col xl="2" cols="3" id="quickMenu" class="small">
+        <h5>Column Title</h5>
+        <div class="my-3">
+          <b-button variant="outline-secondary" size="sm" class="mr-2 my-1"> <b-icon icon="play-fill"></b-icon> Run </b-button>
+          <b-button variant="outline-secondary" size="sm" class="mr-2 my-1"> <b-icon icon="server"></b-icon> Save </b-button>
         </div>
-        <prism-editor class="my-editor" v-model="code" :highlight="highlighter" line-numbers />
+        <p>To do: Make this column a drawer or get rid of it.</p>
       </b-col>
-
-      <b-col lg="5" id="output" class="small">
-        <span v-html="code"></span>
+      <b-col xl="5" cols="9" id="editor" class="mb-5">
+        <b-card>
+          <b-card-text>
+            <prism-editor class="my-editor" v-model="code" :highlight="highlighter" line-numbers />
+          </b-card-text>
+        </b-card>
       </b-col>
+      <b-col xl="5" id="output" class="small">
+        <b-card>
+          <b-card-text>
+            <span v-html="code"></span>
+          </b-card-text>
+        </b-card>
+      </b-col>
+    </b-row>
 
+    <b-row v-if="!user">
+      <b-col>
+        <p>Log into your account to get started.</p>
+      </b-col>
     </b-row>
   </div>
 </template>
@@ -39,44 +50,53 @@ export default {
     PrismEditor
   },
   data: () => ({ 
-    code: `<div class="card">
-  <div class="card-header">Featured</div>
-  <div class="card-body">
-    <h5 class="card-title">Special title treatment</h5>
-    <p class="card-text">
-      With supporting text below as a natural lead-in to additional content.
-    </p>
-    <button class="btn btn-sm btn-primary" onclick="alert('hi')">Click Me</button>
-  </div>
-</div>`
+    code: ` <!-- example -->
+<h1 class="display-4 mb-5">
+  The Main Languages of the Web
+</h1>
+
+<p class="lead mb-5">
+  HTML is the standard markup language for creating Web pages.
+</p>
+
+<p class="lead mb-5">
+  CSS is a language that describes how HTML elements are to be displayed.
+</p>
+
+<p class="lead mb-5">
+  JavaScript is the programming language of HTML and the Web.
+</p>
+`
   }),
   methods: {
     highlighter(code) {
       return highlight(code, languages.js); //returns html
     }
-  }
+  },
+  props: ['user']
 };
 </script>
 
 <style scoped>
   #editor {
-    border-left: solid thin #dfdfdf;
-    border-right: solid thin #dfdfdf;
     overflow-y: hidden;
   }
-  #output, #quickMenu {
+  #output .card {
     height: 85vh;
     overflow-y: scroll;
+  }
+  #editor .card {
+    height: 85vh;
+    overflow-y: scroll;
+    background: #f7f7f7;
   }
   .my-editor {
     background: #f7f7f7;
     color: #ccc;
     font-family: Fira code, Fira Mono, Consolas, Menlo, Courier, monospace;
-    font-size: .75rem;
+    font-size: .7rem;
     line-height: 1.5;
-    padding: 5px;
     overflow-y: scroll;
-    height: 80vh;
   } 
   .prism-editor__textarea:focus {
     outline: none;

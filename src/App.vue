@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Navbar :user="user" />
+    <Navbar :user="user" @logout="logout" />
     <b-container fluid>
       <router-view :user="user" />
     </b-container>
@@ -9,9 +9,8 @@
 
 <script>
 import Navbar from '@/components/Navbar.vue'
-
-// eslint-disable-next-line no-unused-vars
 import Firebase from 'firebase';
+// eslint-disable-next-line no-unused-vars
 import db from './db.js';
 
 export default {
@@ -24,8 +23,24 @@ export default {
       user: null
     };
   },
+  methods: {
+    logout: function(){
+      Firebase.auth()
+        .signOut()
+        .then(
+          ()=> {
+            this.user = null;
+            this.$router.push('login');
+          }
+        )
+    }
+  },
   mounted() {
-    db.collection('users').doc('aZStNTjz6IcGqhphUylE').get().then( snapshot => { this.user = snapshot.data().name; })
+    Firebase.auth().onAuthStateChanged( user => {
+      if(user) { 
+        this.user = user.email 
+      }
+    })
   }
 }
 </script>
