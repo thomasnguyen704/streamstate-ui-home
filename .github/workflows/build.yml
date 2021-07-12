@@ -16,8 +16,9 @@ jobs:
       run: |
         npm ci
         npm run build
+        zip -r dist.zip dist
     - name: Release
       uses: ncipollo/release-action@v1
       with:
-        artifacts: "dist/*"
+        artifacts: "dist.zip"
         token: ${{ secrets.GITHUB_TOKEN }}
