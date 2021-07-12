@@ -1,8 +1,8 @@
 name: build_assets
-on:
+on: 
   push:
-    branches:
-      - main
+    tags:
+    - '*'
 jobs:
   run_build:
     runs-on: ubuntu-latest
