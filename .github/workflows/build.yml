@@ -2,7 +2,7 @@ name: build_assets
 on:
   push:
     branches:
-      - master
+      - main
 jobs:
   run_build:
     runs-on: ubuntu-latest
