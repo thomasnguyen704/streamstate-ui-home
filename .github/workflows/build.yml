@@ -1,24 +1,29 @@
-name: build_assets
-on: 
+name: Bump version
+on:
   push:
-    tags:
-    - '*'
+    branches:
+      - main
 jobs:
-  run_build:
+  build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up node
-      uses: actions/setup-node@v2
-      with:
-        node-version: '14'
-    - name: Install dependencies
-      run: |
-        npm ci
-        npm run build
-        zip -r dist.zip dist
-    - name: Release
-      uses: ncipollo/release-action@v1
-      with:
-        artifacts: "dist.zip"
-        token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@v2
+      - name: Bump version and push tag
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v5.5
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          npm run build
+          zip -r dist.zip dist
+
+      - name: Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "dist.zip"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ steps.tag_version.outputs.new_tag }}
+          name: Release ${{ steps.tag_version.outputs.new_tag }}
